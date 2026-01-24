@@ -8,11 +8,6 @@ const nextConfig: NextConfig = {
 
   // For GitHub Pages deployment where pages might be served from a directory.
   basePath: process.env.BASE_PATH,
-
-  images: {
-    unoptimized: true,
-    path: process.env.BASE_PATH,
-  },
 };
 
 export default nextConfig;
