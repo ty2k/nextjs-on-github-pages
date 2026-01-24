@@ -54,6 +54,10 @@ jobs:
         working-directory: ./app
         run: npm run build
 
+      - name: Create .nojekyll file in build output directory
+        working-directory: ./app/out
+        run: touch .nojekyll
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
