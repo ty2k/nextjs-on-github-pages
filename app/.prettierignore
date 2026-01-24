@@ -1,0 +1,13 @@
+# These files are not formatted by Prettier's `format` command
+
+# Project dependencies
+node_modules/
+
+# Next.js build artifacts
+.next/
+.turbo/
+_next/
+__tmp__/
+dist/
+target/
+compiled/

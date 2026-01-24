@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "format": "npx prettier --write . --ignore-path .prettierignore",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest ."
@@ -25,6 +26,7 @@
     "eslint": "9.39.2",
     "eslint-config-next": "16.1.4",
     "jsdom": "27.4.0",
+    "prettier": "3.8.1",
     "typescript": "5.9.3",
     "vite-tsconfig-paths": "6.0.5",
     "vitest": "4.0.18"
