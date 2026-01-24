@@ -14,4 +14,5 @@
   - Add GitHub Actions workflow file to run tests
 - [x] GitHub Action to build the app
   - Adjust NextConfig to set `output: "export"`
-  - Files in `/_next/` 404
+  - Files in `/_next/` 404 -> Use `BASE_PATH` in Next.js config and GHA workflow
+  - SVGs 404 -> Add custom Image wrapper component to use `BASE_PATH`
