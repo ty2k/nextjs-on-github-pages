@@ -8,4 +8,8 @@
   - Add prettier config
 - [ ] GitHub Action to test the app
   - `npm i vitest -D`
+  - `npm install -D vitest @vitejs/plugin-react jsdom @testing-library/react @testing-library/dom vite-tsconfig-paths`
+  - Add vitest config
+  - Add passing test
+  - Add GitHub Actions workflow file to run tests
 - [ ] GitHub Action to build the app

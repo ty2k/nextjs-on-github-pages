@@ -1,0 +1,51 @@
+name: Test
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Cancel any currently running builds to save GitHub Actions hours.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  vitest-unit-tests:
+    name: Vitest unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Read .nvmrc
+        run: echo "GITHUB_NVMRC_VERSION=$(cat .nvmrc)" >> $GITHUB_ENV
+        working-directory: ./app
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.GITHUB_NVMRC_VERSION }}
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./app
+
+      # Errors in lint process will cause this job to fail
+      - name: Lint
+        run: npm run lint
+        working-directory: ./app
+
+      - name: Run test suite
+        run: npm run test
+        working-directory: ./app
+
+      # Treat failures in the Next.js build as test failures.
+      # We don't need to keep the artifact of this build,
+      # we just care that it completes successfully.
+      - name: Run Next.js build
+        run: npm run build
+        working-directory: ./app
