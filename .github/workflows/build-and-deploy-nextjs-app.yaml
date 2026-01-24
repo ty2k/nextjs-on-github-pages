@@ -50,6 +50,23 @@ jobs:
         working-directory: ./app
         run: npm install
 
+      - name: Set BASE_PATH from repository name
+        # This step writes BASE_PATH to $GITHUB_ENV so subsequent steps (including the build)
+        # can read it as process.env.BASE_PATH.
+        run: |
+          # repo_name is the part after the slash in GITHUB_REPOSITORY (owner/repo)
+          repo_name="${GITHUB_REPOSITORY##*/}"
+
+          # If this is a user/org pages repo like username.github.io, leave BASE_PATH empty (site is at root).
+          if [[ "$repo_name" == *.github.io ]]; then
+            echo "BASE_PATH=" >> $GITHUB_ENV
+            echo "Detected GitHub Pages user/org repo; setting BASE_PATH to empty."
+          else
+            echo "BASE_PATH=/$repo_name" >> $GITHUB_ENV
+            echo "Set BASE_PATH=/$repo_name"
+          fi
+        shell: bash
+
       - name: Build with Next.js
         working-directory: ./app
         run: npm run build
