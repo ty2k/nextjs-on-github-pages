@@ -1,7 +1,6 @@
 name: Deploy Next.js site to Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
 
@@ -14,8 +13,9 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Allow only one concurrent deployment, skipping runs queued between the run
+# in-progress and latest queued. However, do NOT cancel in-progress runs as we
+# want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -39,25 +39,20 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        # with:
-        # Automatically inject basePath in your Next.js configuration file and disable
-        # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
-        #
-        # You may remove this line if you want to manage the configuration yourself.
-        # static_site_generator: next
 
       - name: Install dependencies
         working-directory: ./app
         run: npm install
 
+      # This step writes BASE_PATH to $GITHUB_ENV so subsequent steps (including
+      # the build) can read it as process.env.BASE_PATH.
       - name: Set BASE_PATH from repository name
-        # This step writes BASE_PATH to $GITHUB_ENV so subsequent steps (including the build)
-        # can read it as process.env.BASE_PATH.
         run: |
           # repo_name is the part after the slash in GITHUB_REPOSITORY (owner/repo)
           repo_name="${GITHUB_REPOSITORY##*/}"
 
-          # If this is a user/org pages repo like username.github.io, leave BASE_PATH empty (site is at root).
+          # If this is a user/org pages repo like username.github.io, leave
+          # BASE_PATH empty (site is at root).
           if [[ "$repo_name" == *.github.io ]]; then
             echo "BASE_PATH=" >> $GITHUB_ENV
             echo "Detected GitHub Pages user/org repo; setting BASE_PATH to empty."
